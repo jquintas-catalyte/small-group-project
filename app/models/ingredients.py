@@ -11,12 +11,13 @@ class Ingredients:
     def update_count(self, amount_used):
         if self.unit_amount >= amount_used:
             self.unit_amount -= amount_used
-            return(
-                f"Decremented {amount_used} of {self.item_name}. Remaining: {self.unit_amount}"
-            )
+            return f"Decremented {amount_used} of {self.item_name}. Remaining: {self.unit_amount}"
         else:
-            return(
-                f"Not enough {self.item_name} available. Only {self.unit_amount} remaining."
-            )
+            return f"Not enough {self.item_name} available. Only {self.unit_amount} remaining."
 
     def cost_for_purchase(self):
+        total_cost = 0
+        # if self.item_name not in self.inventory
+        # return "Item name not"
+
+        for item_name in 
