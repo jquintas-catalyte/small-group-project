@@ -1,4 +1,4 @@
-"""Definitions for Ingrediaent class"""
+"""Definitions for Ingredient class"""
 
 
 class Ingredient:
