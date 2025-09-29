@@ -13,17 +13,12 @@ class Drink:
         self.ingredients = ingredients
         self.cost_to_produce = cost_to_produce
         self.markup_percentage = markup_percentage
-        self.sale_price = cost_to_produce * (1 + markup_percentage / 100)
 
     def __repr__(self):
         return f"Drink(name={self.name}, ingredients={self.ingredients}, sale_price={self.sale_price:.2f}, markup_percentage={self.markup_percentage}, cost_to_produce={self.cost_to_produce} )"
 
-
-
-
-
-
-    
-
-
+    @property
+    def sale_price(self):
+        """float: The total cost including markup."""
+        return self.cost_to_produce + (self.cost_to_produce * self.markup_percentage)
 
