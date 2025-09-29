@@ -1,5 +1,7 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from purchase_item import Purchase_Item
+    
 
 class Purchase:
     next_order_id = 1
@@ -9,9 +11,9 @@ class Purchase:
         It sets up the order with default values and assigns a unique.
         ID and the creation timestamp.
         """
-        self.items = []
-        self.status = "unpaid"        
-        self.purchase_id = Purchase.next_order_id
+        self.items: list[Purchase_Item] = []
+        self.status: str = "unpaid"        
+        self.purchase_id: int = Purchase.next_order_id
         Purchase.next_order_id += 1
         
         self.purchase_date = Purchase._get_time()
@@ -30,10 +32,10 @@ class Purchase:
         """ Returns the total cost of all the items purchased """
         final_total = 0
         for item in self.items:
-            final_total += item.total_price
+            final_total += item.get_purchase_cost_of_items()
         return final_total
     
-    def add_item(self, item):
+    def add_item(self, item: Purchase_Item):
         """ Add item to the list """
         self.items.append(item)
 
