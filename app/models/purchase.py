@@ -7,6 +7,7 @@ class Purchase:
 
     @staticmethod
     def _get_time():
+        """ Returns time in Chicago Standard Time """
         chicago_time_now = datetime.now(tz=ZoneInfo("America/Chicago"))
         return chicago_time_now.strftime("%Y-%m-%d %H:%M:%S %Z")
     
@@ -22,7 +23,7 @@ class Purchase:
         self.purchase_date = Purchase._get_time()
 
     def get_order(self):
-        """Returns the items and the unique order number."""
+        """ Returns the items and the unique order number """
         return self.items, self.purchase_id
 
     
