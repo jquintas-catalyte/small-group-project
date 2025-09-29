@@ -5,13 +5,6 @@ class Purchase:
     
     next_order_id = 1
 
-    @staticmethod
-    def _get_time():
-        """ Returns time in Chicago Standard Time """
-        chicago_time_now = datetime.now(tz=ZoneInfo("America/Chicago"))
-        return chicago_time_now.strftime("%Y-%m-%d %H:%M:%S %Z")
-    
-    
     def __init__(self):
         self.items = []
         self.status = "unpaid"        
@@ -40,6 +33,12 @@ class Purchase:
     def add_item(self, item):
         """ Add item to the list """
         self.items.append(item)
+
+    @staticmethod
+    def _get_time():
+        """ Returns time in Chicago Standard Time """
+        chicago_time_now = datetime.now(tz=ZoneInfo("America/Chicago"))
+        return chicago_time_now.strftime("%Y-%m-%d %H:%M:%S %Z")
     
 
     
