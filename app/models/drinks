@@ -1,0 +1,12 @@
+class = Drink:
+    def __init__(self, name, ingredients, cost_to_produce, markup_percentage):
+        self.name = name
+        self.ingredients = ingredients
+        self.cost_to_produce = cost_to_produce
+        self.markup_percentage = markup_percentage
+        self.sale_price = cost_to_produce * (1 + markup_percentage / 100)
+
+    
+
+
+
