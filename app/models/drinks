@@ -6,6 +6,17 @@ class = Drink:
         self.markup_percentage = markup_percentage
         self.sale_price = cost_to_produce * (1 + markup_percentage / 100)
 
+drink_inventory = []
+        def create_drink(name, ingredients, cost_to_produce, markup_percentage):
+            #ensures there are no drinks with the same name  
+            if any(drink.name == name for drink in drink_inventory):
+                print(f"Error: Drink", {name} "already exists.")
+                return
+
+            new_drink = Drink(name, ingredients, cost_to_produce, markup_percentage)
+            drink_inventory.append(new_drink)
+
+            
     
 
 
