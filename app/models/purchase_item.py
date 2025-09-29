@@ -1,6 +1,6 @@
 class PurchaseItem:
 
-    def __init__(self, item_name, count_of_item, item_unit_price):
+    def __init__(self, item_name: str, count_of_item: int, item_unit_price: float):
         """
         Initializes the PurchaseItem class
         Parameters:
