@@ -2,7 +2,6 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 class Purchase:
-    
     next_order_id = 1
 
     def __init__(self):
