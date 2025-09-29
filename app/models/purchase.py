@@ -5,7 +5,7 @@ class Purchase:
     
 
     @staticmethod
-    def date_and_time():
+    def _get_time():
         chicago_time_now = datetime.now(tz=ZoneInfo("America/Chicago"))
         return chicago_time_now.strftime("%Y-%m-%d %H:%M:%S %Z")
     
