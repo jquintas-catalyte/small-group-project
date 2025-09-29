@@ -12,25 +12,30 @@ class Purchase:
         return chicago_time_now.strftime("%Y-%m-%d %H:%M:%S %Z")
     
     
-    def __init__(self, items: list, status: str, prices: float):
-        self.items = items
-        self.status = status
-        self.prices = prices
-        
+    def __init__(self):
+        self.items = []
+        self.status = 'unpaid'        
         self.purchase_id = Purchase.next_order_id
         Purchase.next_order_id += 1
-
+        
         self.purchase_date = Purchase._get_time()
 
     def get_order(self):
         """ Returns the items and the unique order number """
         return self.items, self.purchase_id
-
+    
+    def total_cost(self):
+        """ Returns the total cost of all the items purchased """
+        final_total = 0
+        for item in self.items:
+            final_total += item.total_price
+        return final_total
+    
+    def add_item(self, item):
+        self.items.append(item)
     
 
     
         
-    
 
-                
             
