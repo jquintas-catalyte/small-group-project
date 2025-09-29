@@ -1,9 +1,7 @@
 """This module contains definition for BakedGood class."""
-
 class BakedGood:
     """
     A class Representing a baked good product.
-
     Attributes:
         name (str): The product's name.
         vendor_name (str): The product's vendor.
@@ -29,6 +27,12 @@ class BakedGood:
         self._markup_percentage: float = markup_percentage
         self._known_allergens: list[str] = known_allergens
         self._count: int = count
+
+    def __str__(self) -> str:
+        return self.name
+
+    def __repr__(self):
+        return f"BakedGood(name={self.name}, vendor_name={self.vendor_name}, purchasing_cost={self.purchasing_cost}, markup_percentage={self.markup_percentage}, known_allergens={self.known_allergens}, count={self.count})"
 
     @property
     def name(self) -> str:
@@ -72,7 +76,7 @@ class BakedGood:
         Args:
             amount (int): Positive (increment) or negative (decrement) amount to add to count.
         """
-        self._count += amount  # You must update the private attribute
+        self._count += amount
 
     def update_markup_percentage(self, new_markup: float):
         """
@@ -81,4 +85,4 @@ class BakedGood:
         Args:
             new_markup (float): The new markup multiplier.
         """
-        self._markup_percentage = new_markup  # You must update the private attribute
+        self._markup_percentage = new_markup
