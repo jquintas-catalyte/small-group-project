@@ -1,3 +1,5 @@
+"""This module contains definition for BakedGood class."""
+
 class BakedGood:
     """
     A class Representing a baked good product.
@@ -58,3 +60,25 @@ class BakedGood:
         """int: The number of available units of the product."""
         return self._count
 
+    @property
+    def sale_price(self) -> float:
+        """float: The total sales cost, including base cost and markup."""
+        return self.purchasing_cost + (self.purchasing_cost * self.markup_percentage)
+
+    def update_count(self, amount: int):
+        """
+        Updates the product count.
+
+        Args:
+            amount (int): Positive (increment) or negative (decrement) amount to add to count.
+        """
+        self._count += amount  # You must update the private attribute
+
+    def update_markup_percentage(self, new_markup: float):
+        """
+        Updates the markup percentage on the product's base cost.
+
+        Args:
+            new_markup (float): The new markup multiplier.
+        """
+        self._markup_percentage = new_markup  # You must update the private attribute
