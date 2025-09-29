@@ -6,6 +6,10 @@ class Purchase:
     next_order_id = 1
 
     def __init__(self):
+        """ Initializes a new coffee shop order.
+        It sets up the order with default values and assigns a unique.
+        ID and the creation timestamp.
+        """
         self.items = []
         self.status = "unpaid"        
         self.purchase_id = Purchase.next_order_id
