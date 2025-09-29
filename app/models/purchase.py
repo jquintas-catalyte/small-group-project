@@ -14,11 +14,17 @@ class Purchase:
     
     def __init__(self):
         self.items = []
-        self.status = 'unpaid'        
+        self.status = "unpaid"        
         self.purchase_id = Purchase.next_order_id
         Purchase.next_order_id += 1
         
         self.purchase_date = Purchase._get_time()
+    
+    def __repr__(self):
+        return (f"Purchase(items={self.items!r}, " 
+                f"status={self.status!r}, "
+                f"date={self.purchase_date!r}, "
+                f"order_id={self.purchase_id!r})")
 
     def get_order(self):
         """ Returns the items and the unique order number """
