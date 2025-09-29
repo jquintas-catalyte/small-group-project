@@ -38,6 +38,7 @@ class Purchase:
         return final_total
     
     def add_item(self, item):
+        """ Add item to the list """
         self.items.append(item)
     
 
