@@ -57,3 +57,41 @@ class PurchasesRepository:
         """
         purchase = self.get_purchase(purchase_id)
         purchase.add_item(item)
+
+    def shop_receipt(self, purchase_id: int):
+        """
+        Generates a list representing a receipt for a specific purchase.
+        It retrieves the full purchase details using the given ID and compiles 
+        the relevant information (date, items, and total cost).
+
+        Args:
+            purchase_id (int): The unique ID of the purchase order.
+
+        Returns:
+            list[str]: A list of strings, where each string is a line on the receipt.
+
+        Raises:
+            ValueError: If the purchase_id is not found (inherited from get_purchase).
+        """
+        
+        purchase = self.get_purchase(purchase_id) 
+        receipt = []
+        receipt.append("--- Express O Coffee ---")
+        receipt.append(f"Date: {purchase.purchase_date}")
+        receipt.append(f"Receipt Number: {purchase.purchase_id}")
+        receipt.append("-" * 30)
+
+        if purchase.items:
+            for item in purchase.items:
+            receipt.append(f"  {item.name:<20} ${item.total_price:5.2f}") 
+        else:
+            receipt.append("  -- No items purchased --")
+
+        receipt.append("-" * 30)
+    
+        final_total = purchase.total_cost()
+        receipt.append(f"Total Cost: {' ' * 14} ${final_total:5.2f}") 
+        receipt.append("--------------------------")
+    
+        return receipt
+
