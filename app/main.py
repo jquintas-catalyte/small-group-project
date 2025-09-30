@@ -8,7 +8,7 @@ def drinks_menu():
 def baked_goods_menu():
     "Drinks Menu function"
     display_header("Baked Goods Menu")
-    
+
 
 def main_menu() -> dict:
     """
@@ -26,7 +26,7 @@ def main_menu() -> dict:
             "name": "Baked Goods",
             "menu_function": baked_goods_menu
         },
-        'q': {
+        "q": {
             "name": 'Exit',
             "menu_function": lambda: print('Exiting...')
         }
@@ -40,6 +40,8 @@ def main_menu() -> dict:
         choice_retries += 1
         choice = input('Choose a number option from the menu: ')
         try:
+            if choice == 'q':
+                break
             choice = int(choice)
             if choice not in menu_items:
                 raise ValueError
