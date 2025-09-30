@@ -1,9 +1,7 @@
 from app.models import ingredients
 
 
-
-
-    class IngredientRepository:
+class IngredientRepository:
     """
     A repository for managing Ingredient objects.
     """
@@ -66,8 +64,10 @@ from app.models import ingredients
         ingredient.inventory -= amount
         return ingredient
 
-    def calculate_cost(self, item_name: str, requested_amount: float, unit_of_measure: str) -> float:
-            """
+    def calculate_cost(
+        self, item_name: str, requested_amount: float, unit_of_measure: str
+    ) -> float:
+        """
         Calculate the purchasing cost for a requested amount of an ingredient.
 
         Parameters:
@@ -81,17 +81,17 @@ from app.models import ingredients
         Raises:
             ValueError: If the ingredient is not found or units don’t match.
         """
-            if item_name not in self.ingredients:
-                raise ValueError(f"Ingredient '{item_name}' not found in repository.")
+        if item_name not in self.ingredients:
+            raise ValueError(f"Ingredient '{item_name}' not found in repository.")
 
-            ingredient = self.ingredients[item_name]
+        ingredient = self.ingredients[item_name]
 
-            if unit_of_measure != ingredient.unit_of_measure:
-                raise ValueError(
+        if unit_of_measure != ingredient.unit_of_measure:
+            raise ValueError(
                 f"Unit mismatch: {unit_of_measure} vs {ingredient.unit_of_measure}"
             )
 
         # Unit price = cost / amount purchased
-            unit_price = ingredient.purchasing_cost / ingredient.unit_amount
+        unit_price = ingredient.purchasing_cost / ingredient.unit_amount
 
-            return round(unit_price * requested_amount, 2)
+        return round(unit_price * requested_amount, 2)
