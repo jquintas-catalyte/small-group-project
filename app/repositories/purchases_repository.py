@@ -48,7 +48,7 @@ class PurchasesRepository:
         It first retrieves the purchase using the ID and then calls the 
         purchase's internal add_item method.
 
-        Args:
+        Parameters:
             purchase_id (int): The unique ID of the purchase to update.
             item: The item object (expected to have a 'total_price' attribute) to be added.
         
