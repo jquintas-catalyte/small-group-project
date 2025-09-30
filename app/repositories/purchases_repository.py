@@ -1,6 +1,8 @@
 """ Repository of Purchases """
+import os
+import pandas as pd 
 from models import Purchase, PurchaseItem
-
+from . import root_data_path
 class PurchasesRepository:
     """ 
     Manages a collection of Purchase objects, acting as a data repository.
@@ -8,14 +10,24 @@ class PurchasesRepository:
     orders by ID, adding items to orders, and generating receipts. 
     """
     
-    def __init__(self, data: list[Purchase]):
+    def __init__(self):
         """ 
         Initializes the repository with an existing list of Purchase objects.
         
         Parameters:
             data (list[Purchase]): The list where Purchase objects are stored.
         """
-        self.data: list[Purchase] = data
+        self._df: pd.DataFrame
+
+        self._data_filepath = os.path.join(root_data_path, "purchases_inventory.csv")
+        if not os.path.exists(self._data_filepath):
+            raise FileNotFoundError()
+        
+        self._df = pd.read_csv(self._data_filepath, index_col="purchase_id")
+        self._save()
+
+    def _save(self):
+        self._df.to_csv(self._data_filepath)
 
     def create_purchase(self):
         """
@@ -27,7 +39,13 @@ class PurchasesRepository:
             int: The unique identifier (purchase_id) of the newly created purchase.
         """
         purchase = Purchase()
-        self.data.append(purchase)
+        self._df.loc[len(self._df)] = {
+            "purchase_id": purchase.purchase_id,
+            "status": purchase.status,
+            "date": purchase.purchase_date,
+            "items": []
+        }
+        self._save()
         return purchase.purchase_id
 
     def get_purchase(self, purchase_id: int):
@@ -43,11 +61,17 @@ class PurchasesRepository:
         Raises:
             KeyError: If no purchase with the given ID is found in the data store.
         """
-        matching = [purchase for purchase in self.data if purchase.purchase_id == purchase_id]
-        if len(matching):
-            return matching[0]
-        else:
-            raise KeyError("No ID Found")
+        matching = self._df.loc[purchase_id]
+        try: 
+            purchase = Purchase(purchase_id=matching['purchase_id'], status=matching['status'], items=matching['items'], date=matching['date'])
+            return purchase
+            
+        except KeyError as e:
+            raise e
+        
+    def update_purchase(self, purchase: Purchase):
+        pass
+
 
     def update_purchase_items(self, purchase_id: int, item):
         """
@@ -65,6 +89,8 @@ class PurchasesRepository:
         """
         purchase = self.get_purchase(purchase_id)
         purchase.add_item(item)
+        self.update_purchase(purchase)
+        
 
     def shop_receipt(self, purchase_id: int):
         """
