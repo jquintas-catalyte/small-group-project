@@ -121,8 +121,8 @@ class IngredientRepository:
 
         parameters:
 
-            item_name (str): _description_
-            units (float): _description_
+            item_name (str): The name of the ingredient to update.
+            units (float): The number of units to add (positve) or deduct (negative)
 
         Raises:
             ValueError: _description_
