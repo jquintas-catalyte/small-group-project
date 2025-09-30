@@ -3,6 +3,8 @@ class DrinkRepository:
     def __init__(self):
         self._drinks = {}
 
+    
+    
     def add(self, drink: Drink):
         """Adds new drink to repository"""
         if not isinstance(drink, Drink):
@@ -22,7 +24,7 @@ class DrinkRepository:
     
     def update(self, drink: Drink):
         """Updates an existing drink in the repository."""
-        if drink.name not in self.drinks:
+        if drink.name not in self._drinks:
             raise ValueError(f"Drink with name {drink.name} not found.")
         self._drinks[drink.name] = drink
         print(f"Updated drink: {drink.name}")
