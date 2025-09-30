@@ -86,3 +86,7 @@ class BakedGood:
             new_markup (float): The new markup multiplier.
         """
         self._markup_percentage = new_markup
+
+    def is_available(self):
+        """Determines if the product is available by count."""
+        return self.count > 0

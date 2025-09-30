@@ -1,5 +1,7 @@
 item_name,category,purchasing_cost,unit_amount,unit_of_measure,inventory
-Milk,Dairy,1.50,1.0,L,100
+Whole Milk,Dairy,1.50,1.0,L,100
+Almond Milk,Dairy-Substitute,1.50,1.0,L,60
+Oat Milk,Dairy-Substitute,1.50,1.0,L,50
 Coffee Beans,Beverage,15.00,1.0,kg,10
 Sugar,Sweetener,2.00,1.0,kg,20
 Vanilla Extract,Flavoring,5.00,0.1,L,5
