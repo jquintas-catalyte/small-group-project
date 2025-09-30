@@ -5,6 +5,7 @@ from purchase_item import Purchase_Item
     
 
 class Purchase:
+
     next_order_id = 1
 
     def __init__(self):
