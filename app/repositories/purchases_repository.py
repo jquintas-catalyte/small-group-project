@@ -1,4 +1,4 @@
-from ..models.purchase import Purchase, Purchase_Item
+from models.purchase import Purchase, PurchaseItem
 
 class PurchasesRepository:
     """ 
