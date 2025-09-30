@@ -29,7 +29,7 @@ class IngredientService:
             ItemNotFound: If the ingredient is not found in the repository.
         """
         return self.repo.get_item_by_name(item_name)
-    
+
     def get_items_by_name(self, item_name: str) -> list[Ingredient]:
         """
         Retrieve a list of ingredients by their names.
@@ -44,8 +44,7 @@ class IngredientService:
             ItemNotFound: If any ingredient is not found in the repository.
         """
         return self.repo.get_items_by_name(item_name)
-    
-    
+
     def is_in_stock(self, item_name: str, amount_needed: float | None = None) -> bool:
         """
         Check if an ingredient is in stock.
@@ -56,10 +55,8 @@ class IngredientService:
         Returns:
             bool: True if the ingredient is in stock, False otherwise.
         """
-        return self.repo.is(item_name, amount_needed)
-    
+        return self.repo.is_in_stock(item_name, amount_needed)
 
-    
     def get_items_by_category(self, category: str) -> list[Ingredient]:
         """
         Retrieve all ingredients in a given category.
