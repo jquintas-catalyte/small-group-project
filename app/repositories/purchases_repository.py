@@ -64,7 +64,7 @@ class PurchasesRepository:
         It retrieves the full purchase details using the given ID and compiles 
         the relevant information (date, items, and total cost).
 
-        Args:
+        Parameters:
             purchase_id (int): The unique ID of the purchase order.
 
         Returns:
