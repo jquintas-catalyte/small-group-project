@@ -7,17 +7,20 @@ class Purchase:
 
     next_order_id = 1
 
-    def __init__(self):
+    def __init__(self, purchase_id:  int | None=None, status:str = 'unpaid', items: list[PurchaseItem] = [], date: str | None = None):
         """ Initializes a new coffee shop order.
         It sets up the order with default values and assigns a unique.
         ID and the creation timestamp.
         """
-        self.items: list[PurchaseItem] = []
-        self.status: str = "unpaid"        
-        self.purchase_id: int = Purchase.next_order_id
-        Purchase.next_order_id += 1
+        self.items = items
+        self.status: str = status     
+        if not purchase_id:
+            self.purchase_id: int = Purchase.next_order_id
+            Purchase.next_order_id += 1
+        else:
+            self.purchase_id =  purchase_id
         
-        self.purchase_date = Purchase._get_time()
+        self.purchase_date = date or Purchase.get_time()
     
     def __repr__(self):
         return (f"Purchase(items={self.items!r}, " 
@@ -41,7 +44,7 @@ class Purchase:
         self.items.append(item)
 
     @staticmethod
-    def _get_time():
+    def get_time():
         """ Returns time in Chicago Standard Time """
         chicago_time_now = datetime.now(tz=ZoneInfo("America/Chicago"))
         return chicago_time_now.strftime("%Y-%m-%d %H:%M:%S %Z")
