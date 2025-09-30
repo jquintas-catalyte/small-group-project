@@ -1,4 +1,5 @@
-from models.purchase import Purchase, PurchaseItem
+""" Repository of Purchases """
+from models import Purchase, PurchaseItem
 
 class PurchasesRepository:
     """ 
