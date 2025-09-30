@@ -33,4 +33,4 @@ class Drink:
     @property
     def sale_price(self):
         """float: The total cost including markup."""
-        return self.cost_to_produce + (self.cost_to_produce * self.markup_percentage)
+        return self.cost_to_produce * (1 + self.markup_percentage / 100)
