@@ -15,83 +15,58 @@ class IngredientService:
         """
         self.repo = repo
 
-    def calculate_cost_for_amount(
-        self, item_name: str, requested_amount: float
-    ) -> float:
+    def get_ingredient_by_name(self, item_name: str) -> Ingredient:
         """
-        Calculate the purchasing cost for a given amount of an ingredient.
+        Retrieve an ingredient by name.
 
-        Args:
-            item_name (str): Name of the ingredient.
-            requested_amount (float): The amount of the ingredient needed.
+        Parameters:
+            item_name (str): The name of the ingredient to retrieve.
 
         Returns:
-            float: Cost for the requested amount.
+            Ingredient: The requested ingredient.
 
         Raises:
-            ItemNotFound: If the ingredient does not exist.
+            ItemNotFound: If the ingredient is not found in the repository.
         """
-        ingredient = self.repo.get_item(item_name)
-
-        # Unit price = purchasing_cost / unit_amount
-        unit_price = ingredient.purchasing_cost / ingredient.unit_amount
-        return round(unit_price * requested_amount, 2)
-
-    def use_ingredient(self, item_name: str, requested_amount: float) -> float:
+        return self.repo.get_item_by_name(item_name)
+    
+    def get_items_by_name(self, item_name: str) -> list[Ingredient]:
         """
-        Deduct an ingredient from inventory and return its cost.
+        Retrieve a list of ingredients by their names.
 
-        Args:
-            item_name (str): Ingredient name.
-            requested_amount (float): Amount to use.
+        Parameters:
+            item_name (str): The name of the ingredient to retrieve.
 
         Returns:
-            float: The cost of the requested amount.
+            list[Ingredient]: List of the requested ingredients.
 
         Raises:
-            ValueError: If not enough inventory is available.
-            ItemNotFound: If ingredient is not found.
+            ItemNotFound: If any ingredient is not found in the repository.
         """
-        if not self.repo.is_item_in_stock(item_name, requested_amount):
-            raise ValueError(
-                f"Not enough {item_name} in stock to use {requested_amount} units."
-            )
-
-        # Update inventory (deduct)
-        self.repo.update_inventory(item_name, -requested_amount)
-
-        # Calculate cost
-        return self.calculate_cost_for_amount(item_name, requested_amount)
-
-    def restock_ingredient(self, item_name: str, units: float):
+        return self.repo.get_items_by_name(item_name)
+    
+    
+    def is_in_stock(self, item_name: str, amount_needed: float | None = None) -> bool:
         """
-        Add stock for an ingredient.
+        Check if an ingredient is in stock.
 
-        Args:
-            item_name (str): Ingredient name.
-            units (float): Number of units to add.
-
-        Raises:
-            ItemNotFound: If the ingredient does not exist.
-        """
-        self.repo.update_inventory(item_name, units)
-
-    def get_ingredient_info(self, item_name: str) -> dict:
-        """
-        Retrieve structured information about an ingredient.
-
-        Args:
-            item_name (str): Ingredient name.
-
+        Parameters:
+            item_name (str): The name of the ingredient to check.
+            amount_needed (float): The amount needed to check against inventory.
         Returns:
-            dict: Ingredient details (name, category, cost, inventory, etc.).
+            bool: True if the ingredient is in stock, False otherwise.
         """
-        ingredient = self.repo.get_item(item_name)
-        return {
-            "item_name": ingredient.item_name,
-            "category": ingredient.category,
-            "unit_amount": ingredient.unit_amount,
-            "unit_of_measure": ingredient.unit_of_measure,
-            "purchasing_cost": ingredient.purchasing_cost,
-            "inventory": ingredient.inventory,
-        }
+        return self.repo.is(item_name, amount_needed)
+    
+
+    
+    def get_items_by_category(self, category: str) -> list[Ingredient]:
+        """
+        Retrieve all ingredients in a given category.
+
+        Parameters:
+            category (str): The category to filter ingredients by.
+        Returns:
+            list[Ingredient]: List of ingredients in the specified category.
+        """
+        return self.repo.get_items_by_category(category)
