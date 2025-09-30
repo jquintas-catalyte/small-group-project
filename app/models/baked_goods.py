@@ -1,4 +1,4 @@
-"""This module contains definition for BakedGood class."""
+"""BakedGood class definition."""
 class BakedGood:
     """
     A class Representing a baked good product.
@@ -86,3 +86,7 @@ class BakedGood:
             new_markup (float): The new markup multiplier.
         """
         self._markup_percentage = new_markup
+
+    def is_available(self):
+        """Determines if the product is available by count."""
+        return self.count > 0
