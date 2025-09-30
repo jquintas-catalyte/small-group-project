@@ -1,13 +1,20 @@
 from ..models.purchase import Purchase, Purchase_Item
 
 class PurchasesRepository:
-    """ A repository of purchases """
+    """ 
+    Manages a collection of Purchase objects, acting as a data repository.
+    This class handles operations such as creating new orders, retrieving existing 
+    orders by ID, adding items to orders, and generating receipts. 
+    """
     
     def __init__(self, data: list[Purchase]):
-        """ Initalize  the repository
-        Expection: No ID Found
+        """ 
+        Initializes the repository with an existing list of Purchase objects.
+        
+        Parameters:
+            data (list[Purchase]): The list where Purchase objects are stored.
         """
-        self.data:list[Purchase] = data
+        self.data: list[Purchase] = data
 
     def create_purchase(self):
         """
@@ -33,13 +40,13 @@ class PurchasesRepository:
             Purchase: The matching Purchase object.
 
         Raises:
-            Exception: If no purchase with the given ID is found in the data store.
+            KeyError: If no purchase with the given ID is found in the data store.
         """
         matching = [purchase for purchase in self.data if purchase.purchase_id == purchase_id]
         if len(matching):
             return matching[0]
         else:
-            raise Exception("No ID Found")
+            raise KeyError("No ID Found")
 
     def update_purchase_items(self, purchase_id: int, item):
         """
@@ -53,7 +60,7 @@ class PurchasesRepository:
             item: The item object (expected to have a 'total_price' attribute) to be added.
         
         Raises:
-            Exception: If no purchase with the given ID is found (inherited from get_purchase).
+            KeyError: If no purchase with the given ID is found (inherited from get_purchase).
         """
         purchase = self.get_purchase(purchase_id)
         purchase.add_item(item)
@@ -71,7 +78,7 @@ class PurchasesRepository:
             list[str]: A list of strings, where each string is a line on the receipt.
 
         Raises:
-            ValueError: If the purchase_id is not found (inherited from get_purchase).
+            KeyError: If the purchase_id is not found (inherited from get_purchase).
         """
         
         purchase = self.get_purchase(purchase_id) 
@@ -83,15 +90,16 @@ class PurchasesRepository:
 
         if purchase.items:
             for item in purchase.items:
-                receipt.append(f"  {item.name:<20} ${item.total_price:5.2f}") 
+                item_cost = item.get_purchase_cost_of_items() 
+                receipt.append(f"  {item.item_name:<20} ${item_cost:5.2f}") 
         else:
             receipt.append("  -- No items purchased --")
 
         receipt.append("-" * 30)
-    
+        
         final_total = purchase.total_cost()
         receipt.append(f"Total Cost: {' ' * 14} ${final_total:5.2f}") 
         receipt.append("--------------------------")
-    
+        
         return receipt
 
