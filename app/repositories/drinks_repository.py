@@ -1,7 +1,17 @@
 from models.drinks import Drink
 class DrinkRepository:
     def __init__(self):
+        """Initializes the repository with a dictionary and prepopulates it with a list of coffee drinks"""
+
         self._drinks = {}
+        self._seed_data()
+        
+    def _seed_data(self):
+        """Loads a set of coffee drinks in repository."""
+       
+        coffee_drinks = [
+            Drink()
+        ]
 
     
     
