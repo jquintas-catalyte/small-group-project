@@ -1,4 +1,4 @@
-"""This module contains definition for BakedGood class."""
+"""BakedGood class definition."""
 class BakedGood:
     """
     A class Representing a baked good product.

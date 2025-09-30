@@ -1,20 +1,26 @@
+"""Baked goods repository module."""
 import ast
 import os
 import pandas as pd
 from models import BakedGood
 from . import root_data_path
 
+
 class BakedGoodsRepository:
+    """Baked Goods Repository."""
     def __init__(self):
+        """
+        Initializes the repository.
+        Raises:
+            FileNotFoundError: If data file path is invalid.
+        """
         self._df: pd.DataFrame
         self._data_filepath = os.path.join(root_data_path, "baked_goods_inventory.csv")
-        if os.path.exists(self._data_filepath):
-            self._df = pd.read_csv(self._data_filepath, converters={"known_allergens": ast.literal_eval})
-        else:
-            self._df = pd.DataFrame(columns=["name", "vendor_name", "purchasing_cost", "markup_percentage", "known_allergens", "count"])
-            self.save()
+        if not os.path.exists(self._data_filepath):
+            raise FileNotFoundError(f"The file {self._data_filepath} was not found.")
+        self._df = pd.read_csv(self._data_filepath, converters={"known_allergens": ast.literal_eval})
 
-    def save(self):
+    def _save(self):
         """
         Save the changes to the inventory.
         Raises:
@@ -24,33 +30,12 @@ class BakedGoodsRepository:
             raise FileNotFoundError(f"The file {self._data_filepath} was not found.")
         self._df.to_csv(self._data_filepath, index=False)
 
-    def add_product(self, product: BakedGood):
-        """
-        Adds a new pruduct to the inventory.
+    def get_product_by_name(self, name: str) -> BakedGood | None:
+        """Get a product by name
         Args:
-            product (BakedGood): The product to add.
-        """
-        if product.name in self._df["name"].values:
-            raise ValueError(f"Baked good with name '{product.name}' already exists.")
-        new_row = {
-            "name": product.name,
-            "vendor_name": product.vendor_name,
-            "purchasing_cost": product.purchasing_cost,
-            "markup_percentage": product.markup_percentage,
-            "known_allergens": product.known_allergens,
-            "count": product.count,
-        }
-        self._df = self._df.append(new_row, ignore_index=True)
-        self.save()
-
-    def get(self, name: str) -> BakedGood | None:
-        """_summary_
-
-        Args:
-            name (str): _description_
-
+            name (str): The product name
         Returns:
-            BakedGood | None: _description_
+            BakedGood | None: The product if found. 
         """
         row = self._df[self._df["name"] == name]
         if row.empty:
@@ -65,27 +50,7 @@ class BakedGoodsRepository:
             count=row["count"],
         )
 
-    def update(self, name: str, updates: dict):
-        """_summary_
-
-        Args:
-            name (str): _description_
-            updates (dict): _description_
-
-        Raises:
-            ValueError: _description_
-            KeyError: _description_
-        """
-        index = self._df[self._df["name"] == name].index
-        if index.empty:
-            raise ValueError(f"Baked good with name '{name}' not found.")
-        for key, value in updates.items():
-            if key not in self._df.columns:
-                raise KeyError(f"Invalid field: {key}")
-            self._df.at[index[0], key] = value
-        self.save()
-
-    def list_all(self) -> list[BakedGood]:
+    def list_all_products(self) -> list[BakedGood]:
         """
         Lists all baked goods.
         Returns:
@@ -104,6 +69,3 @@ class BakedGoodsRepository:
                 )
             )
         return goods
-
-
-
