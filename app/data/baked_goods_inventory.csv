@@ -1,0 +1,11 @@
+name,vendor_name,purchasing_cost,markup_percentage,known_allergens,count
+Chocolate Chip Cookie,Crumbly Delights,0.50,0.6,"[""gluten"", ""eggs"", ""milk""]",100
+Blueberry Muffin,Berry Bakes,0.75,0.5,"[""gluten"", ""eggs""]",80
+Gluten-Free Brownie,Healthy Treats,0.90,0.4,"[""eggs"", ""soy""]",50
+Almond Croissant,French Touch,1.20,0.55,"[""gluten"", ""eggs"", ""nuts"", ""milk""]",30
+Vegan Banana Bread,Plant Power,0.85,0.45,"[""gluten""]",60
+Oatmeal Raisin Cookie,Crumbly Delights,0.55,0.6,"[""gluten""]",75
+Apple Pie Slice,Grandma's Oven,1.00,0.5,"[""gluten"", ""eggs"", ""milk""]",40
+Pumpkin Muffin,Autumn Bakery,0.70,0.55,"[""gluten"", ""eggs""]",45
+Cinnamon Roll,Sticky Fingers,1.10,0.6,"[""gluten"", ""milk"", ""eggs""]",25
+Lemon Tart,Sweet & Zesty,1.30,0.5,"[""gluten"", ""eggs"", ""milk""]",35
