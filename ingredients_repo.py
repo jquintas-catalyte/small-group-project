@@ -1,25 +1,7 @@
 from app.models import ingredients
 
 
-class IngredientRepository:
 
-    def get_ingredients(self):
-        return {
-            "item name": self.item_name,
-            "category": self.category,
-        }
-
-    def update_count(inventory, item_name, amount):
-
-        if item_name in inventory and inventory[item_name] >= amount:
-            inventory[item_name] -= amount
-            print(
-                f"Decremented {amount} {item_name}(s). New quantity: {inventory[item_name]}"
-            )
-        elif item_name not in inventory:
-            print(f"Error: {item_name} not found in inventory.")
-        else:
-            print(f"Error: Insufficient quantity of {item_name}.")
 
     class IngredientRepository:
     """
