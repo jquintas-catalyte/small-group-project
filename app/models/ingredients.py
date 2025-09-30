@@ -14,12 +14,11 @@ class Ingredient:
 
     def __init__(
         self,
-        item_name,
-        category,
-        purchasing_cost,
-        unit_amount,
-        unit_of_measure,
-        inventory,
+        item_name: str,
+        category: str,
+        purchasing_cost: float,
+        unit_amount: float,
+        unit_of_measure: str,
     ):
         """
         Initializes the Ingredient class.
@@ -37,4 +36,33 @@ class Ingredient:
         self.purchasing_cost = purchasing_cost
         self.unit_amount = unit_amount
         self.unit_of_measure = unit_of_measure
-        self.inventory = inventory
+    def __repr__(self):
+        return f"Ingredient(item_name={self.item_name}, category={self.category}, purchasing_cost={self.purchasing_cost}, unit_amount={self.unit_amount}, unit_of_measure={self.unit_of_measure})"
+    
+    @property
+    def cost_per_unit(self) -> float:
+        """
+        Calculate the cost per unit of the ingredient.
+        Returns:
+            float: The cost per unit.
+        """
+        return self.purchasing_cost / self.unit_amount
+    
+    @property
+    def is_in_stock(self) -> bool:
+        """
+        Check if the ingredient is in stock.
+        Returns:
+            bool: True if in stock, False otherwise.
+        """
+        return self.inventory > 0
+    
+    def can_use(self, amount_needed: float) -> bool:
+        """
+        Check if the requested amount of the ingredient can be used.
+        Parameters:
+            amount (float): The amount to check.
+        Returns:
+            bool: True if the amount can be used, False otherwise.
+        """
+        return self.unit_amount >= amount_needed
