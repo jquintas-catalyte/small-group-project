@@ -83,7 +83,7 @@ class PurchasesRepository:
 
         if purchase.items:
             for item in purchase.items:
-            receipt.append(f"  {item.name:<20} ${item.total_price:5.2f}") 
+                receipt.append(f"  {item.name:<20} ${item.total_price:5.2f}") 
         else:
             receipt.append("  -- No items purchased --")
 
