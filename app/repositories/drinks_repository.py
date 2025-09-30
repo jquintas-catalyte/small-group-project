@@ -1,61 +1,64 @@
-from models.drinks import Drink
+import ast
+import os
+import pandas as pd
+from models import Drink
+from . import root_data_path
+from exceptions import ItemNotFound
+
 class DrinkRepository:
     def __init__(self):
-        """Initializes the repository with a dictionary and prepopulates it with a list of coffee drinks"""
+        """
+        Initializes the repository.
+        Raises:
+            FileNotFoundError: If data file path is invalid.
+        """
+        self._df: pd.DataFrame
+        self._data_filepath = os.path.join(root_data_path, "drinks_inventory.csv")
+        if not os.path.exists(self._data_filepath):
+            raise FileNotFoundError(f"The file {self._data_filepath} was not found.")
+        self._df = pd.read_csv(self._data_filepath, converters={"ingredients": ast.literal_eval})
 
-        self._drinks = {}
-        self._seed_data()
+    def get_drink_by_name(self, drink_name:str):
+        """
+        Gets a drink by name.
+        Args:
+            drink_name (str): The name of the drink to get.
+        Raises:
+            ItemNotFound: If drink does not exist
+            KeyError: If row does not have needed Drink  constructor args.
+
+        Returns:
+            Drink: Drink matching provided name.
+        """
+        row = self._df[self._df["name"] == drink_name]
+        if row.empty:
+            raise ItemNotFound(f"Drink with name '{drink_name}' was not found")
+        row = row.iloc[0]
+        try:
+            return Drink(
+                name=row["name"],
+                markup_percentage=row["markup_percentage"],
+                ingredients=row["ingredients"],
+            )
+        except KeyError as e:
+            raise e
         
-    def _seed_data(self):
-        """Loads a set of coffee drinks in repository."""
-       
-        coffee_drinks = [
-            Drink()
-        ]
-
-    
-    
-    def add(self, drink: Drink):
-        """Adds new drink to repository"""
-        if not isinstance(drink, Drink):
-            raise TypeError("Only Drink objects can be added to repository.")
-        if drink.name in self._drinks:
-            raise ValueError(f"Drink with name {drink.name} already exists")
-        self._drinks[drink.name] =drink
-        print(f"Added drink: {drink.name}")
-
-    def get(self, name: str):
-        """Retrieves a drink by name."""
-        return self._drinks.get(name)
-    
     def get_all(self):
-        """Returns a list of all drinks in repository."""
-        return list(self._drinks.values())
-    
-    def update(self, drink: Drink):
-        """Updates an existing drink in the repository."""
-        if drink.name not in self._drinks:
-            raise ValueError(f"Drink with name {drink.name} not found.")
-        self._drinks[drink.name] = drink
-        print(f"Updated drink: {drink.name}")
-
-    def delete(self, name: str):
-        """Deletes a drink from within the repository by name"""
-        if name not in  self._drinks:
-            raise ValueError(f"Drink with name {name} not found.")
-        del self._drinks[name]
-        print(f"Deleted drink: {name}")
-
-
-if __name__ == "__main__":
-    """Creates repository."""
-    repo = DrinkRepository()
-
-    """Defines some ingredients"""
+        """
+        Returns a list of all drinks in repository.
+        Returns:
+            list[Drink]: The list of all drinks.
+        """
+        drinks: list[Drink] = []
+        for _, item in self._df.iterrows():
+            drinks.append(
+                Drink(
+                    name=item['name'],
+                    ingredients=item['ingredients'],
+                    markup_percentage=item['markup_percentage']
+                )
+            )    
+        return drinks
 
 
 
-
-
-
-    """Creates new Drink objects"""
