@@ -32,6 +32,18 @@ class IngredientRepository:
         self._df.to_csv(self._data_filepath, index=False)
 
     def _get_item_row(self, item_name: str) -> pd.Series:
+        """
+
+        Args: 
+            item_name (str): The name of the ingredient.
+
+
+        Raises:
+            ItemNotfound: If the ingredient is not found.
+
+        Returns:
+            pd.Series: The row corresponding to the ingredient.
+        """
         item = self._df[self._df["item_name"] == item_name]
         if item.empty:
             raise ItemNotFound(f"Ingredient '{item_name}' not found.")
