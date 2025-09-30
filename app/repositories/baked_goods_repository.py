@@ -44,6 +44,14 @@ class BakedGoodsRepository:
         self.save()
 
     def get(self, name: str) -> BakedGood | None:
+        """_summary_
+
+        Args:
+            name (str): _description_
+
+        Returns:
+            BakedGood | None: _description_
+        """
         row = self._df[self._df["name"] == name]
         if row.empty:
             return None
@@ -58,6 +66,16 @@ class BakedGoodsRepository:
         )
 
     def update(self, name: str, updates: dict):
+        """_summary_
+
+        Args:
+            name (str): _description_
+            updates (dict): _description_
+
+        Raises:
+            ValueError: _description_
+            KeyError: _description_
+        """
         index = self._df[self._df["name"] == name].index
         if index.empty:
             raise ValueError(f"Baked good with name '{name}' not found.")
