@@ -1,7 +1,7 @@
 """ Repository of Purchases """
 import os
 import pandas as pd 
-from models import Purchase, PurchaseItem
+from models import Purchase
 from . import root_data_path
 
 class PurchasesRepository:
