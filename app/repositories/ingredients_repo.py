@@ -2,26 +2,6 @@ from app.models import ingredients
 
 
 class IngredientRepository:
-
-    def get_ingredients(self):
-        return {
-            "item name": self.item_name,
-            "category": self.category,
-        }
-
-    def update_count(inventory, item_name, amount):
-
-        if item_name in inventory and inventory[item_name] >= amount:
-            inventory[item_name] -= amount
-            print(
-                f"Decremented {amount} {item_name}(s). New quantity: {inventory[item_name]}"
-            )
-        elif item_name not in inventory:
-            print(f"Error: {item_name} not found in inventory.")
-        else:
-            print(f"Error: Insufficient quantity of {item_name}.")
-
-    class IngredientRepository:
     """
     A repository for managing Ingredient objects.
     """
@@ -30,8 +10,9 @@ class IngredientRepository:
         # in-memory storage for now
         self._ingredients = {}
 
-    def add(self, ingredient):
+    def add(self, ingredient, purchasing_cost, unit_amount, unit_of_measure):
         self._ingredients[ingredient.item_name] = ingredient
+        self._ingredients[]
 
     def get(self, item_name):
         return self._ingredients.get(item_name)
@@ -84,8 +65,10 @@ class IngredientRepository:
         ingredient.inventory -= amount
         return ingredient
 
-    def calculate_cost(self, item_name: str, requested_amount: float, unit_of_measure: str) -> float:
-            """
+    def calculate_cost(
+        self, item_name: str, requested_amount: float, unit_of_measure: str
+    ) -> float:
+        """
         Calculate the purchasing cost for a requested amount of an ingredient.
 
         Parameters:
@@ -99,17 +82,17 @@ class IngredientRepository:
         Raises:
             ValueError: If the ingredient is not found or units don’t match.
         """
-            if item_name not in self.ingredients:
-                raise ValueError(f"Ingredient '{item_name}' not found in repository.")
+        if item_name not in self.ingredients:
+            raise ValueError(f"Ingredient '{item_name}' not found in repository.")
 
-            ingredient = self.ingredients[item_name]
+        ingredient = self.ingredients[item_name]
 
-            if unit_of_measure != ingredient.unit_of_measure:
-                raise ValueError(
+        if unit_of_measure != ingredient.unit_of_measure:
+            raise ValueError(
                 f"Unit mismatch: {unit_of_measure} vs {ingredient.unit_of_measure}"
             )
 
         # Unit price = cost / amount purchased
-            unit_price = ingredient.purchasing_cost / ingredient.unit_amount
+        unit_price = ingredient.purchasing_cost / ingredient.unit_amount
 
-            return round(unit_price * requested_amount, 2)
+        return round(unit_price * requested_amount, 2)
