@@ -3,6 +3,7 @@ import os
 import pandas as pd 
 from models import Purchase, PurchaseItem
 from . import root_data_path
+
 class PurchasesRepository:
     """ 
     Manages a collection of Purchase objects, acting as a data repository.
@@ -90,7 +91,6 @@ class PurchasesRepository:
         purchase = self.get_purchase(purchase_id)
         purchase.add_item(item)
         self.update_purchase(purchase)
-        
 
     def shop_receipt(self, purchase_id: int):
         """
