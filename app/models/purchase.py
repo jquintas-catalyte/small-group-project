@@ -1,9 +1,8 @@
 """ Defintion of Purchases """
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from purchase_item import PurchaseItem
+from .purchase_item import PurchaseItem
     
-
 class Purchase:
 
     next_order_id = 1
