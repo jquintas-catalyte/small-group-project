@@ -29,11 +29,11 @@ class PurchaseServices:
         Adds a single item to existing, active purchase order.
 
         Parameters:
-            purchase_id (int): the ID of the order to update.
-            item (PurchaseItem): the item added to the order.
+            purchase_id (int): The ID of the order to update.
+            item (PurchaseItem): The item added to the order.
 
         Raises: 
-            KeyError: if purchase ID isn't found
+            KeyError: If purchase ID isn't found
         """
         self.purchases_repository.update_purchase_items(purchase_id, item)
 
