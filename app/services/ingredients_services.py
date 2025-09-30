@@ -1,5 +1,3 @@
-from app.repositories.ingredients_repository import IngredientsRepo
-
 from repositories import IngredientRepository
 from models import Ingredient
 
