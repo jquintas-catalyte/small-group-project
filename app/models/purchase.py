@@ -1,3 +1,4 @@
+""" Defintion of Purchases """
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from purchase_item import Purchase_Item
