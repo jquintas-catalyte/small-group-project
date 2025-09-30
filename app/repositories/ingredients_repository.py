@@ -128,16 +128,15 @@ class IngredientRepository:
         return item.is_in_stock() if not amount_needed else item.can_use(amount_needed)
 
     def update_inventory(self, item_name: str, units: float):
-        """increment or decrement the inventory of an ingredient.
+        """
+        Retrieve all ingredients in a given category.
 
-
-        parameters:
-
-            item_name (str): _description_
-            units (float): _description_
-
+        Parameters:
+            category (str): The category to filter ingredients by.
+        Returns:
+            list[Ingredient]: List of ingredients in the specified category.
         Raises:
-            ValueError: _description_
+            ItemNotFound: If no ingredients are found in the specified category.
         """
         item = self._get_item_row(item_name)
         itemp = item.to_dict()
