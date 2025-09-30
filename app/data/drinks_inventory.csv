@@ -1,0 +1,3 @@
+name,ingredients,markup_percentage
+Latte,"[{""name"": ""Milk"", ""amount"": 0.25, ""price_per_unit"": 1.50}, {""name"": ""Coffee Beans"", ""amount"": 0.02, ""price_per_unit"": 15.00}]",0.4
+Vanilla Latte,"[{""name"": ""Milk"", ""amount"": 0.25, ""price_per_unit"": 1.50}, {""name"": ""Coffee Beans"", ""amount"": 0.02, ""price_per_unit"": 15.00}, {""name"": ""Vanilla Extract"", ""amount"": 0.01, ""price_per_unit"": 5.00}]",0.5

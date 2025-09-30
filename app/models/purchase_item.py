@@ -1,8 +1,8 @@
-class Purchase_Item:
+class PurchaseItem:
 
-    def __init__(self, item_name, count_of_item, item_unit_price):
+    def __init__(self, item_name: str, count_of_item: int, item_unit_price: float):
         """
-        Initializes the Purchase_Item class
+        Initializes the PurchaseItem class
         Parameters:
             item_name (str): name of the item
             count_of_item (int): number of items
@@ -22,7 +22,7 @@ class Purchase_Item:
 
     def __str__(self):
         """
-        Outputs the attributes of the purchase_item and the calculated purchase cost from get_purchase_cost_of_items
+        Outputs the attributes of the PurchaseItem class and the calculated purchase cost from get_purchase_cost_of_items
         Returns:
             A description of the function attributes and the cost of purchase
         """
