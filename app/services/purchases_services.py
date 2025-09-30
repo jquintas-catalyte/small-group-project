@@ -37,4 +37,19 @@ class PurchaseServices:
         """
         self.purchases_repository.update_purchase_items(purchase_id, item)
 
-        
+    def generate_receipt(self, purchase_id: int):
+        """
+        Generates a formatted list of strings representing the final receipt 
+        for a completed order.
+
+        Parameters:
+            purchase_id (int): The ID of the order for which to generate the receipt.
+
+        Returns:
+            list[str]: A list of strings, ready to be printed or displayed.
+
+        Raises:
+            KeyError: If the purchase ID is not found.
+        """
+        return self.purchases_repository.shop_receipt(purchase_id)
+
