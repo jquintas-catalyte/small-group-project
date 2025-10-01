@@ -33,11 +33,24 @@ class IngredientRepository:
 
     def _get_item_row(self, item_name: str) -> pd.Series:
         item = self._df[self._df["name"] == item_name]
+        """
+
+        Args: 
+            item_name (str): The name of the ingredient.
+
+
+        Raises:
+            ItemNotfound: If the ingredient is not found.
+
+        Returns:
+            pd.Series: The row corresponding to the ingredient.
+        """
+        item = self._df[self._df["item_name"] == item_name]
         if item.empty:
             raise ItemNotFound(f"Ingredient '{item_name}' not found.")
         return item.iloc[0]
 
-    def get_item(self, item_name: str) -> Ingredient:
+    def get_item_by_name(self, item_name: str) -> Ingredient:
         """
         Get an ingredient by name.
         Args:
@@ -56,12 +69,38 @@ class IngredientRepository:
                 purchasing_cost=item["purchasing_cost"],
                 unit_amount=item["unit_amount"],
                 unit_of_measure=item["unit_of_measure"],
-                inventory=item["inventory"],
             )
         except KeyError as e:
             raise ValueError(f"Missing expected column in data: {e}")
 
-    def get_items(self, item_names: list[str]) -> list[Ingredient]:
+    def get_items_by_category(self, category: str) -> list[Ingredient]:
+        """
+        Retrieve all ingredients in a given category.
+
+        Parameters:
+            category (str): The category to filter ingredients by.
+        Returns:
+            list[Ingredient]: List of ingredients in the specified category.
+        Raises:
+            ItemNotFound: If no ingredients are found in the specified category.
+        """
+        items_df = self._df[self._df["category"] == category]
+        if items_df.empty:
+            raise ItemNotFound(f"No ingredients found in category '{category}'.")
+        ingredients = []
+        for _, row in items_df.iterrows():
+            ingredients.append(
+                Ingredient(
+                    item_name=row["item_name"],
+                    category=row["category"],
+                    purchasing_cost=row["purchasing_cost"],
+                    unit_amount=row["unit_amount"],
+                    unit_of_measure=row["unit_of_measure"],
+                )
+            )
+        return ingredients
+
+    def get_items_by_name(self, item_names: list[str]) -> list[Ingredient]:
         """
         Get multiple ingredients by their names.
         Args:
@@ -70,13 +109,24 @@ class IngredientRepository:
         Raises:
             ItemNotFound: If any ingredient is not found.
         """
-        return [self.get_item(name) for name in item_names]
+        return [self.get_item_by_name(name) for name in item_names]
 
-    def is_item_in_stock( self, item_name: str, amount_needed: float | None = None ) -> bool:
-        item = self.get_item(item_name)
+    def is_item_in_stock(self, item_name: str, amount_needed: float | None = None) -> bool:
+        """Determined if an item is in stock"""
+        item = self.get_item_by_name(item_name)
         return item.is_in_stock() if not amount_needed else item.can_use(amount_needed)
 
     def update_inventory(self, item_name: str, units: float):
+        """
+        Retrieve all ingredients in a given category.
+
+        Parameters:
+            category (str): The category to filter ingredients by.
+        Returns:
+            list[Ingredient]: List of ingredients in the specified category.
+        Raises:
+            ItemNotFound: If no ingredients are found in the specified category.
+        """
         item = self._get_item_row(item_name)
         itemp = item.to_dict()
         if itemp["unit_amount"] + units < 0:
