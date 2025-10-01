@@ -4,6 +4,7 @@ import os
 import pandas as pd
 from models import BakedGood
 from . import root_data_path
+from exceptions import ItemNotFound
 
 
 class BakedGoodsRepository:
@@ -30,25 +31,43 @@ class BakedGoodsRepository:
             raise FileNotFoundError(f"The file {self._data_filepath} was not found.")
         self._df.to_csv(self._data_filepath, index=False)
 
-    def get_product_by_name(self, name: str) -> BakedGood | None:
+    def _get_item_row(self, item_name: str) -> pd.Series:
+        """
+        Gets the item row in the database.
+
+        Args:
+            item_name (str): The item to lookup.
+
+        Raises:
+            ItemNotFound: If matching row does not exist.
+
+        Returns:
+            pd.Series: The matching row
+        """
+        item = self._df[self._df["name"] == item_name]
+        if item.empty:
+            raise ItemNotFound(f"Ingredient '{item_name}' not found.")
+        return item.iloc[0]
+
+    def get_product_by_name(self, product_name: str) -> BakedGood:
         """Get a product by name
         Args:
             name (str): The product name
         Returns:
-            BakedGood | None: The product if found. 
+            BakedGood | None: The product if found 
         """
-        row = self._df[self._df["name"] == name]
-        if row.empty:
-            return None
-        row = row.iloc[0]
-        return BakedGood(
-            name=row["name"],
-            vendor_name=row["vendor_name"],
-            purchasing_cost=row["purchasing_cost"],
-            markup_percentage=row["markup_percentage"],
-            known_allergens=row["known_allergens"],
-            count=row["count"],
-        )
+        product = self._get_item_row(product_name)
+        try:
+            return BakedGood(
+                name=product["name"],
+                vendor_name=product["vendor_name"],
+                purchasing_cost=product["purchasing_cost"],
+                markup_percentage=product["markup_percentage"],
+                known_allergens=product["known_allergens"],
+                count=product["count"],
+            )
+        except KeyError as e:
+            raise e
 
     def list_all_products(self) -> list[BakedGood]:
         """
