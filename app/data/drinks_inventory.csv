@@ -8,4 +8,4 @@ Blended Coffee Frappe,"[{""name"": ""Milk"", ""amount"": 0.25, ""price_per_unit"
 Iced Coffee,"[{""name"": ""Milk"", ""amount"": 0.25, ""price_per_unit"": 1.50}, {""name"": ""Coffee Beans"", ""amount"": 0.03, ""price_per_unit"": 15.00}]",0.4
 Cafe Con Leche,"[{""name"": ""Milk"", ""amount"": 0.25, ""price_per_unit"": 1.50}, {""name"": ""Coffee Beans"", ""amount"": 0.06, ""price_per_unit"": 15.00}]",0.7
 Flat White,"[{""name"": ""Milk"", ""amount"": 0.25, ""price_per_unit"": 1.50}, {""name"": ""Coffee Beans"", ""amount"": 0.07, ""price_per_unit"": 15.00}]",0.4
-Vanilla Iced Coffee, "[{""name"": ""Milk"", ""amount"": 0.25, ""price_per_unit"": 1.50}, {""name"": ""Coffee Beans"", ""amount"": 0.05, ""price_per_unit"": 15.00}], {""name"": ""Vanilla Extract"", ""amount"": 0.01, ""price_per_unit"": 5.00}]",0.4
+Vanilla Iced Coffee, "[{""name"": ""Milk"", ""amount"": 0.25, ""price_per_unit"": 1.50}, {""name"": ""Coffee Beans"", ""amount"": 0.05, ""price_per_unit"": 15.00}, {""name"": ""Vanilla Extract"", ""amount"": 0.01, ""price_per_unit"": 5.00}]",0.5
