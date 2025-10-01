@@ -3,3 +3,4 @@ root_data_path = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(_
 from .ingredients_repository import IngredientRepository
 from .baked_goods_repository import BakedGoodsRepository
 from .purchases_repository import PurchasesRepository
+from .drinks_repository import DrinkRepository
