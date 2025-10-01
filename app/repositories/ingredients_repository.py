@@ -32,6 +32,7 @@ class IngredientRepository:
         self._df.to_csv(self._data_filepath, index=False)
 
     def _get_item_row(self, item_name: str) -> pd.Series:
+        item = self._df[self._df["name"] == item_name]
         """
 
         Args: 
@@ -63,12 +64,11 @@ class IngredientRepository:
         item = self._get_item_row(item_name)
         try:
             return Ingredient(
-                item_name=item["item_name"],
+                item_name=item["name"],
                 category=item["category"],
                 purchasing_cost=item["purchasing_cost"],
                 unit_amount=item["unit_amount"],
                 unit_of_measure=item["unit_of_measure"],
-                inventory=item["inventory"],
             )
         except KeyError as e:
             raise ValueError(f"Missing expected column in data: {e}")
@@ -96,7 +96,6 @@ class IngredientRepository:
                     purchasing_cost=row["purchasing_cost"],
                     unit_amount=row["unit_amount"],
                     unit_of_measure=row["unit_of_measure"],
-                    inventory=row["inventory"],
                 )
             )
         return ingredients
@@ -112,18 +111,8 @@ class IngredientRepository:
         """
         return [self.get_item_by_name(name) for name in item_names]
 
-    def is_item_in_stock(
-        self, item_name: str, amount_needed: float | None = None
-    ) -> bool:
-        """
-        check if an ingredient is in stock.
-        parameters:item_name (str): The name of the ingredient to check.
-             amount_needed (float): the amount neeeded to check against inventory.
-            returns: bool: True if the ingredient is in stock, False otherwise.
-            Raises:
-            ItemNotFound: If the ingredient is not found.
-
-        """
+    def is_item_in_stock(self, item_name: str, amount_needed: float | None = None) -> bool:
+        """Determined if an item is in stock"""
         item = self.get_item_by_name(item_name)
         return item.is_in_stock() if not amount_needed else item.can_use(amount_needed)
 

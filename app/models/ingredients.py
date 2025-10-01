@@ -48,14 +48,13 @@ class Ingredient:
         """
         return self.purchasing_cost / self.unit_amount
     
-    @property
     def is_in_stock(self) -> bool:
         """
         Check if the ingredient is in stock.
         Returns:
             bool: True if in stock, False otherwise.
         """
-        return self.inventory > 0
+        return self.unit_amount > 0
     
     def can_use(self, amount_needed: float) -> bool:
         """
