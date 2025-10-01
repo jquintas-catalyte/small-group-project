@@ -14,7 +14,7 @@ class BakedGoodsService:
         Args:
             repository (BakedGoodsRepository, optional): The repository to use.
         """
-        self.repository = repository or BakedGoodsRepository()
+        self._repository = repository or BakedGoodsRepository()
 
     def get_product(self, name: str) -> BakedGood:
         """
@@ -29,7 +29,7 @@ class BakedGoodsService:
         Raises:
             ItemNotFound: If no baked good matches the name.
         """
-        return self.repository.get_product_by_name(name)
+        return self._repository.get_product_by_name(name)
 
     def list_products(self) -> list[BakedGood]:
         """
@@ -38,7 +38,7 @@ class BakedGoodsService:
         Returns:
             list[BakedGood]: All baked goods.
         """
-        return self.repository.list_all_products()
+        return self._repository.list_all_products()
 
     def get_low_stock_items(self, threshold: int = 5) -> list[BakedGood]:
         """

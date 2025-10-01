@@ -16,7 +16,7 @@ class DrinkRepository:
         self._data_filepath = os.path.join(root_data_path, "drinks_inventory.csv")
         if not os.path.exists(self._data_filepath):
             raise FileNotFoundError(f"The file {self._data_filepath} was not found.")
-        self._df = pd.read_csv(self._data_filepath, converters={"ingredients": ast.literal_eval})
+        self._df = pd.read_csv(self._data_filepath)
 
     def get_drink_by_name(self, drink_name:str):
         """

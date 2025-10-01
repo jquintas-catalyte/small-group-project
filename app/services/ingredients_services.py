@@ -9,11 +9,11 @@ class IngredientService:
     restocking, and calculating costs.
     """
 
-    def __init__(self, repo: IngredientRepository):
+    def __init__(self, repository: IngredientRepository):
         """
         Initialize the service with an IngredientRepository.
         """
-        self.repo = repo
+        self._repository = repository
 
     def get_ingredient_by_name(self, item_name: str) -> Ingredient:
         """
@@ -28,9 +28,9 @@ class IngredientService:
         Raises:
             ItemNotFound: If the ingredient is not found in the repository.
         """
-        return self.repo.get_item_by_name(item_name)
+        return self._repository.get_item_by_name(item_name)
 
-    def get_items_by_name(self, item_name: str) -> list[Ingredient]:
+    def get_items_by_name(self, item_names: list[str]) -> list[Ingredient]:
         """
         Retrieve a list of ingredients by their names.
 
@@ -43,7 +43,7 @@ class IngredientService:
         Raises:
             ItemNotFound: If any ingredient is not found in the repository.
         """
-        return self.repo.get_items_by_name(item_name)
+        return self._repository.get_items_by_name(item_names)
 
     def is_in_stock(self, item_name: str, amount_needed: float | None = None) -> bool:
         """
@@ -55,7 +55,7 @@ class IngredientService:
         Returns:
             bool: True if the ingredient is in stock, False otherwise.
         """
-        return self.repo.is_in_stock(item_name, amount_needed)
+        return self._repository.is_item_in_stock(item_name, amount_needed)
 
     def get_items_by_category(self, category: str) -> list[Ingredient]:
         """
@@ -66,4 +66,7 @@ class IngredientService:
         Returns:
             list[Ingredient]: List of ingredients in the specified category.
         """
-        return self.repo.get_items_by_category(category)
+        return self._repository.get_items_by_category(category)
+
+    def get_all(self):
+        return self._repository.get_all()

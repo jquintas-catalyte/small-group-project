@@ -32,13 +32,10 @@ class IngredientRepository:
         self._df.to_csv(self._data_filepath, index=False)
 
     def _get_item_row(self, item_name: str) -> pd.Series:
-        item = self._df[self._df["name"] == item_name]
         """
-
+        Returns the row containing the item with item name provided.
         Args: 
             item_name (str): The name of the ingredient.
-
-
         Raises:
             ItemNotfound: If the ingredient is not found.
 
@@ -71,7 +68,7 @@ class IngredientRepository:
                 unit_of_measure=item["unit_of_measure"],
             )
         except KeyError as e:
-            raise ValueError(f"Missing expected column in data: {e}")
+            raise ValueError(f"Missing expected column in data: {e}") from e
 
     def get_items_by_category(self, category: str) -> list[Ingredient]:
         """
@@ -136,3 +133,21 @@ class IngredientRepository:
             "unit_amount"
         ]
         self._save()
+
+    def get_all(self) -> list[Ingredient]:
+        """Gets the list of all ingredients.
+        Returns:
+            list[Ingredient]: The list of ingredients.
+        """
+        ingredients: list[Ingredient] = []
+        for _, row in self._df.iterrows():
+            ingredients.append(
+                Ingredient(
+                    item_name=row["item_name"],
+                    category=row["category"],
+                    purchasing_cost=row["purchasing_cost"],
+                    unit_amount=row["unit_amount"],
+                    unit_of_measure=row["unit_of_measure"],
+                )
+            )
+        return ingredients
