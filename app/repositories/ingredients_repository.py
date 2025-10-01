@@ -32,7 +32,7 @@ class IngredientRepository:
         self._df.to_csv(self._data_filepath, index=False)
 
     def _get_item_row(self, item_name: str) -> pd.Series:
-        item = self._df[self._df["item_name"] == item_name]
+        item = self._df[self._df["name"] == item_name]
         if item.empty:
             raise ItemNotFound(f"Ingredient '{item_name}' not found.")
         return item.iloc[0]
@@ -51,7 +51,7 @@ class IngredientRepository:
         item = self._get_item_row(item_name)
         try:
             return Ingredient(
-                item_name=item["item_name"],
+                item_name=item["name"],
                 category=item["category"],
                 purchasing_cost=item["purchasing_cost"],
                 unit_amount=item["unit_amount"],
@@ -72,10 +72,7 @@ class IngredientRepository:
         """
         return [self.get_item(name) for name in item_names]
 
-    def is_item_in_stock(
-        self, item_name: str, amount_needed: float | None = None
-    ) -> bool:
-
+    def is_item_in_stock( self, item_name: str, amount_needed: float | None = None ) -> bool:
         item = self.get_item(item_name)
         return item.is_in_stock() if not amount_needed else item.can_use(amount_needed)
 
